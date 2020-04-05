@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Stage 1') {
+            steps {
+                echo 'Do some stuff here'
+                // Simulate failure
+                error('An error occurred on stage 1')
+                
+            }
+        }
+    }
+    post {
+        failure {
+            mail to: 'sergio.sanchez.munoz@gmail.com',
+                subject: "Job $JOB_NAME failed" ,
+                body: """Build $BUILD_NUMBER failed.
+Go to $BUILD_URL for more info."""                
+        }
+    }
+}
