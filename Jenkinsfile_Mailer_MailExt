@@ -23,7 +23,7 @@ pipeline {
 	post {
 		always {
 			step([$class: 'Mailer', notifyEveryUnstableBuild: true, 
-				recipients: emailextrecipients([[$class: 'CulpritsRecipientProvider'],      <1>
+				recipients: emailextrecipients([[$class: 'CulpritsRecipientProvider'],    
 												[$class: 'RequesterRecipientProvider']])])
 		}
 	}
