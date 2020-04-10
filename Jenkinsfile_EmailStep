@@ -13,7 +13,7 @@ pipeline {
     }
     post {
         failure {
-            mail to: 'sergio.sanchez.munoz@gmail.com',
+            mail to: 'user@mydomain.com',
                 subject: "Job $JOB_NAME failed" ,
                 body: """Build $BUILD_NUMBER failed.
 Go to $BUILD_URL for more info."""                
