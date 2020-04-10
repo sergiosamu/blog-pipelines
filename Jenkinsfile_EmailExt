@@ -23,12 +23,12 @@ pipeline {
     }
     post {
         always {
-            emailext subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!',      
-                        recipientProviders: [requestor()],                                  
-                        replyTo: "$DEFAULT_REPLYTO",                                        
-                        body: '${SCRIPT, template="groovy.template"}',                      
+            emailext subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!', 
+                        recipientProviders: [requestor()],
+                        replyTo: '$DEFAULT_REPLYTO',
+                        body: '${SCRIPT, template="groovy-html.template"}',
                         mimeType: 'text/html',
-                        presendScript: "cancel=run.getPreviousBuild().result.toString().equals(run.result.toString())"    
+                        presendScript: 'cancel=run.getPreviousBuild().result.toString().equals(run.result.toString())'						
         }
     }
 }
