@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    parameters {
+        booleanParam(
+            defaultValue: false,
+            description: 'Force error',
+            name: 'FORCE_ERROR')
+    }
+    stages {
+        stage('Stage 1') {
+            steps {
+                echo 'Do some stuff here'
+            }
+        }        
+        stage('Stage 2') {
+            when { expression { return params.FORCE_ERROR } }
+            steps {
+                // Simulate failure
+                error('An error occurred on stage 1')
+            }
+        }
+    }
+    post {
+        always {
+            step([$class: 'Mailer', notifyEveryUnstableBuild: true, 
+                recipients: 'user@mydomain.com'])
+        }
+    }
+}
