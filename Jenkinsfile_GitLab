@@ -1,0 +1,28 @@
+properties([
+    parameters([
+        gitParameter(branch: '',
+                     branchFilter: 'origin/(.*)',
+                     defaultValue: 'master',
+                     description: '',
+                     name: 'gitlabTargetBranch',
+                     quickFilterEnabled: false,
+                     selectedValue: 'NONE',
+                     sortMode: 'NONE',
+                     tagFilter: '*',
+                     type: 'PT_BRANCH')    <1>
+    ])
+])
+
+pipeline {
+   agent any
+   triggers {
+      gitlab(triggerOnPush: true, triggerOnMergeRequest: false, triggerOnNoteRequest: false, branchFilterType: 'All')    <2>
+   }   
+   stages {
+      stage('Hello') {
+         steps {
+            sh 'echo Trigger build for branch: origin/$gitlabTargetBranch'    <3>
+         }
+      }
+   }
+}
